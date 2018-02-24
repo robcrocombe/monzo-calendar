@@ -4,7 +4,7 @@
   "description": "A calendar for your Monzo money",
   "main": "index.html",
   "scripts": {
-    "start": "parcel ./src/index.html",
+    "start": "parcel ./index.html",
     "lint": "npm run lint:js && npm run lint:scss",
     "lint:js": "eslint --format=node_modules/eslint-codeframe-formatter --ignore-path .gitignore src/",
     "lint:scss": "stylelint \"**/*.scss\" --syntax scss"
@@ -23,7 +23,8 @@
     "babel-cli": "6.26.0",
     "babel-preset-env": "1.6.1",
     "babel-register": "6.26.0",
-    "css-loader": "^0.28.10",
+    "css-loader": "0.28.10",
+    "moment": "2.20.1",
     "parcel-bundler": "1.6.2",
     "parcel-plugin-vue": "1.5.0",
     "stylelint": "9.1.1",
