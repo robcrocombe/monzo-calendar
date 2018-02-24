@@ -1,0 +1,37 @@
+{
+  "name": "monzo-calendar",
+  "version": "1.0.0",
+  "description": "A calendar for your Monzo money",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./app/server.js",
+    "build-and-run": "rm -rf app/ && npm run build && npm start",
+    "build": "babel src/ -d app/",
+    "lint": "npm run lint:js && npm run lint:scss",
+    "lint:js": "eslint --format=node_modules/eslint-codeframe-formatter --ignore-path .gitignore src/",
+    "lint:scss": "stylelint \"**/*.scss\" --syntax scss"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robcrocombe/monzo-calendar.git"
+  },
+  "author": "Rob Crocombe <me@robcrocombe.com> (http://robcrocombe.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robcrocombe/monzo-calendar/issues"
+  },
+  "homepage": "https://github.com/robcrocombe/monzo-calendar#readme",
+  "dependencies": {
+    "babel-cli": "6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "6.26.0",
+    "stylelint": "9.1.1",
+    "stylelint-config-standard": "18.1.0"
+  },
+  "devDependencies": {
+    "eslint": "4.18.1",
+    "eslint-codeframe-formatter": "1.0.2",
+    "eslint-config-airbnb-base": "12.1.0",
+    "eslint-plugin-import": "2.9.0"
+  }
+}
