@@ -4,6 +4,7 @@ npm-debug.log*
 
 node_modules
 
-app/
+dist/
 .env
 .DS_Store
+.cache

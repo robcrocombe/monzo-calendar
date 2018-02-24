@@ -2,11 +2,9 @@
   "name": "monzo-calendar",
   "version": "1.0.0",
   "description": "A calendar for your Monzo money",
-  "main": "index.js",
+  "main": "index.html",
   "scripts": {
-    "start": "node ./app/server.js",
-    "build-and-run": "rm -rf app/ && npm run build && npm start",
-    "build": "babel src/ -d app/",
+    "start": "parcel ./src/index.html",
     "lint": "npm run lint:js && npm run lint:scss",
     "lint:js": "eslint --format=node_modules/eslint-codeframe-formatter --ignore-path .gitignore src/",
     "lint:scss": "stylelint \"**/*.scss\" --syntax scss"
@@ -23,10 +21,15 @@
   "homepage": "https://github.com/robcrocombe/monzo-calendar#readme",
   "dependencies": {
     "babel-cli": "6.26.0",
-    "babel-preset-env": "^1.6.1",
+    "babel-preset-env": "1.6.1",
     "babel-register": "6.26.0",
+    "css-loader": "^0.28.10",
+    "parcel-bundler": "1.6.2",
+    "parcel-plugin-vue": "1.5.0",
     "stylelint": "9.1.1",
-    "stylelint-config-standard": "18.1.0"
+    "stylelint-config-standard": "18.1.0",
+    "vue": "2.5.13",
+    "vue-template-compiler": "2.5.13"
   },
   "devDependencies": {
     "eslint": "4.18.1",
