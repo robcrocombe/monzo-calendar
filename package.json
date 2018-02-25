@@ -5,6 +5,7 @@
   "main": "index.html",
   "scripts": {
     "start": "parcel ./index.html",
+    "create-env": "cp .env.sample .env",
     "lint": "npm run lint:js && npm run lint:scss",
     "lint:js": "eslint --format=node_modules/eslint-codeframe-formatter --ignore-path .gitignore src/",
     "lint:scss": "stylelint \"**/*.scss\" --syntax scss"
