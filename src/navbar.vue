@@ -5,9 +5,9 @@
         Monzo Calendar
       </div>
     </div>
-    <div class="navbar-end">
+    <div class="navbar-end" v-if="showLoginButton">
       <div class="navbar-item">
-        <a type="button" class="button is-primary" v-bind:href="monzoAuthUrl">Auth with Monzo</a>
+        <a type="button" class="button is-primary" v-bind:href="monzoLoginUrl">Login with Monzo</a>
       </div>
     </div>
   </nav>
@@ -15,13 +15,24 @@
 
 <script>
 import * as authService from './monzo/auth.service';
+import { Events } from './events';
 
 export default {
   name: 'navBar',
-  computed: {
-    monzoAuthUrl() {
-      return authService.redirectUrl();
-    }
+  data() {
+    return {
+      showLoginButton: false,
+    };
   },
-}
+  computed: {
+    monzoLoginUrl() {
+      return authService.loginUrl();
+    },
+  },
+  created() {
+    Events.$on('logged-out', () => {
+      this.showLoginButton = true;
+    });
+  },
+};
 </script>

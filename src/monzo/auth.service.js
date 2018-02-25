@@ -3,7 +3,7 @@ const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const STATE_TOKEN = process.env.STATE_TOKEN;
 
-export function redirectUrl() {
+export function loginUrl() {
   return `https://auth.monzo.com/?
     client_id=${CLIENT_ID}
     &redirect_uri=${REDIRECT_URL}
@@ -27,10 +27,7 @@ export function getToken(authCode) {
     },
     body: data,
   })
-  .then(resp => resp.json())
-  .then(data => {
-    localStorage.setObject('session.config', data);
-  });
+  .then(resp => resp.json());
 }
 
 function getFormData(params) {
