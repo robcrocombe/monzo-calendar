@@ -1,7 +1,7 @@
 <template>
   <div class="calendar">
     <div v-for="day in weekdays">{{ day }}</div>
-    <day v-for="day in calData" :date="day"></day>
+    <day v-for="day in calData" :day="day"></day>
   </div>
 </template>
 
@@ -24,10 +24,4 @@ export default {
 </script>
 
 <style lang="css">
-.calendar {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-auto-flow: row dense;
-  grid-gap: 2px 10px;
-}
 </style>
