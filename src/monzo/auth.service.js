@@ -12,7 +12,7 @@ export function redirectUrl() {
 }
 
 export function getToken(authCode) {
-  const formData = getFormData({
+  const data = getFormData({
     grant_type: 'authorization_code',
     client_id: CLIENT_ID,
     client_secret: CLIENT_SECRET,
@@ -23,17 +23,20 @@ export function getToken(authCode) {
   return fetch('https://api.monzo.com/oauth2/token', {
     method: 'POST',
     headers: {
-      'content-type': 'application/x-www-form-urlencoded',
+      'content-type': 'application/x-www-form-urlencoded; charset=utf-8',
     },
-    body: formData,
-  }).then(res => {
-    console.log(res);
-    console.log(res.json());
+    body: data,
+  })
+  .then(resp => resp.json())
+  .then(data => {
+    localStorage.setObject('session.config', data);
   });
 }
 
-function getFormData(object) {
-  const formData = new FormData();
-  Object.keys(object).forEach(key => formData.append(key, object[key]));
-  return formData;
+function getFormData(params) {
+  const searchParams = new URLSearchParams();
+  for (const prop in params) {
+    searchParams.set(prop, params[prop]);
+  }
+  return searchParams;
 }

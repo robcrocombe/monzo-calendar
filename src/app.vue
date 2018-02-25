@@ -14,17 +14,20 @@ import * as authService from './monzo/auth.service';
 export default {
   name: 'app',
   created() {
-    const url = new URL(window.location.href);
-    const code = url.searchParams.get('code');
-    const state = url.searchParams.get('state');
+    if (!localStorage.getObject('session.config')) {
+      const url = new URL(window.location.href);
+      const code = url.searchParams.get('code');
+      const state = url.searchParams.get('state');
 
-    if (code && state) {
-      if (state !== process.env.STATE_TOKEN) {
-        console.error(`State token '${state}' does not match local token`);
-        return;
+      if (code && state) {
+        window.history.replaceState({}, document.title, '/');
+
+        if (state !== process.env.STATE_TOKEN) {
+          console.error(`State token '${state}' does not match local token`);
+          return;
+        }
+        authService.getToken(code);
       }
-
-      authService.getToken(code);
     }
   },
   components: {
