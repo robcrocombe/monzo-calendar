@@ -1,5 +1,15 @@
 import moment from 'moment';
 
+export const WEEKDAYS = [
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
+];
+
 export function getCalendar() {
   const now = moment();
   const startDate = getStartDate(now);
@@ -10,9 +20,7 @@ export function getCalendar() {
     calendar.push(getDayObject(m, now));
   }
 
-  console.log(calendar);
-
-  return 'hi';
+  return calendar;
 }
 
 function getStartDate(now) {
