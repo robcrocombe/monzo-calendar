@@ -1,6 +1,6 @@
 <template>
   <!-- Day -->
-  <div class="box" v-bind:class="{ 'has-text-weight-bold': day.isToday }">{{ title }}</div>
+  <div class="box box-date" v-bind:class="{ 'has-text-weight-bold': day.isToday }">{{ title }}</div>
 </template>
 
 <script>
