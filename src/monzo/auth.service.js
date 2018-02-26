@@ -27,13 +27,16 @@ export function getToken(authCode) {
       'content-type': 'application/x-www-form-urlencoded; charset=utf-8',
     },
     body: data,
-  })
-  .then(resp => resp.json());
+  }).then(resp => resp.json());
 }
 
 function setStateToken() {
   // Generate random token
-  stateToken = 'id-' + Math.random().toString(36).substr(2, 16);
+  stateToken =
+    'id-' +
+    Math.random()
+      .toString(36)
+      .substr(2, 16);
   localStorage.setItem('session.stateToken', stateToken);
   return stateToken;
 }

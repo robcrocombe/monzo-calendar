@@ -6,9 +6,18 @@
   "scripts": {
     "start": "parcel ./index.html",
     "create-env": "cp .env.sample .env",
-    "lint": "npm run lint:js && npm run lint:scss",
+    "lint": "npm run lint:prettier && npm run lint:js && npm run lint:scss",
+    "lint:prettier": "npm run prettier -- -l 'src/**/*.js' || exit 0",
     "lint:js": "eslint --format=node_modules/eslint-codeframe-formatter --ignore-path .gitignore src/",
-    "lint:scss": "stylelint \"**/*.scss\" --syntax scss"
+    "lint:scss": "stylelint \"**/*.scss\" --syntax scss",
+    "prettier": "prettier --write",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "npm run prettier",
+      "git add"
+    ]
   },
   "repository": {
     "type": "git",
@@ -25,10 +34,10 @@
     "babel-cli": "6.26.0",
     "babel-preset-env": "1.6.1",
     "babel-register": "6.26.0",
-    "bulma": "^0.6.2",
+    "bulma": "0.6.2",
     "css-loader": "0.28.10",
     "moment": "2.20.1",
-    "node-sass": "^4.7.2",
+    "node-sass": "4.7.2",
     "parcel-bundler": "1.6.2",
     "parcel-plugin-vue": "1.5.0",
     "postcss-modules": "1.1.0",
@@ -41,9 +50,16 @@
     "eslint": "4.18.1",
     "eslint-codeframe-formatter": "1.0.2",
     "eslint-config-airbnb-base": "12.1.0",
-    "eslint-plugin-import": "2.9.0"
+    "eslint-plugin-import": "2.9.0",
+    "husky": "0.14.3",
+    "lint-staged": "7.0.0"
   },
   "browserslist": [
     "last 2 versions"
-  ]
+  ],
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  }
 }

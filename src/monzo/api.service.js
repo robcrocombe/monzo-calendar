@@ -55,8 +55,7 @@ function getTransactions() {
   return get('/transactions', {
     account_id: accountId,
     since: calService.getStartDate().toISOString(),
-  })
-  .then(res => {
+  }).then(res => {
     console.log(res);
   });
 }
