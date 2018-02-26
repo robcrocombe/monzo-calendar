@@ -2,17 +2,14 @@ import * as authService from './auth.service';
 import { Events } from './../events';
 
 const BASE_URL = 'https://api.monzo.com';
-let session;
+let sessionToken;
+let accountId;
 
 export function init() {
-  session = localStorage.getObject('session.config');
+  sessionToken = localStorage.getItem('session.token');
+  accountId = localStorage.getItem('session.accountId');
 
-  if (session) {
-    get('/accounts', {
-      account_type: 'uk_retail',
-    }).then(res => {
-      console.log(res);
-    });
+  if (sessionToken && accountId) {
   } else {
     const url = new URL(window.location.href);
     const code = url.searchParams.get('code');
@@ -26,13 +23,27 @@ export function init() {
         return;
       }
 
-      authService.getToken(code).then(data => {
-        localStorage.setObject('session.config', data);
-      });
+      authService
+        .getToken(code)
+        .then(res => {
+          sessionToken = res.access_token;
+          localStorage.setItem('session.token', sessionToken);
+        })
+        .then(getAccountId)
+        .then(res => {
+          accountId = res.accounts[0].id;
+          localStorage.setItem('session.accountId', accountId);
+        });
     } else {
       Events.$emit('logged-out');
     }
   }
+}
+
+export function getAccountId() {
+  return get('/accounts', {
+    account_type: 'uk_retail',
+  });
 }
 
 function get(url, params) {
@@ -43,7 +54,7 @@ function get(url, params) {
   return fetch(BASE_URL + url, {
     method: 'GET',
     headers: {
-      authorization: `Bearer ${session.access_token}`,
+      authorization: `Bearer ${sessionToken}`,
     },
   }).then(resp => resp.json());
 }

@@ -10,6 +10,8 @@ Storage.prototype.getObject = function(key) {
   return value && JSON.parse(value);
 };
 
+Vue.config.productionTip = false;
+
 new Vue({
   el: '#app',
   render: h => h(App)
