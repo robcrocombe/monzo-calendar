@@ -11,7 +11,7 @@ export function init() {
   accountId = localStorage.getItem('session.accountId');
 
   if (sessionToken && accountId) {
-    getTransactions();
+    // getTransactions();
   } else {
     const stateToken = localStorage.getItem('session.stateToken');
     const url = new URL(window.location.href);

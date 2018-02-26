@@ -1,9 +1,13 @@
 <template>
-  <!-- Day -->
-  <div class="box box-date" v-bind:class="{ 'has-text-weight-bold': day.isToday }">{{ title }}</div>
+  <div class="box box-date" v-bind:class="{ 'has-text-weight-bold': day.isToday }">
+    <span>{{ title }}</span>
+    <transaction></transaction>
+  </div>
 </template>
 
 <script>
+import Transaction from './transaction.vue';
+
 export default {
   name: 'day',
   props: ['day'],
@@ -13,7 +17,10 @@ export default {
         return this.day.date.format('D MMM');
       }
       return this.day.date.format('D');
-    }
+    },
+  },
+  components: {
+    Transaction,
   },
 };
 </script>
