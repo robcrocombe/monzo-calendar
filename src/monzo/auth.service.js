@@ -1,14 +1,15 @@
 const REDIRECT_URL = 'http://localhost:1234/';
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
-const STATE_TOKEN = process.env.STATE_TOKEN;
 
 export function loginUrl() {
+  stateToken = setStateToken();
+
   return `https://auth.monzo.com/?
     client_id=${CLIENT_ID}
     &redirect_uri=${REDIRECT_URL}
     &response_type=code
-    &state=${STATE_TOKEN}`.replace(/\s/g, '');
+    &state=${stateToken}`.replace(/\s/g, '');
 }
 
 export function getToken(authCode) {
@@ -28,6 +29,13 @@ export function getToken(authCode) {
     body: data,
   })
   .then(resp => resp.json());
+}
+
+function setStateToken() {
+  // Generate random token
+  stateToken = 'id-' + Math.random().toString(36).substr(2, 16);
+  localStorage.setItem('session.stateToken', stateToken);
+  return stateToken;
 }
 
 function getFormData(params) {

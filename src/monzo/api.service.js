@@ -1,4 +1,5 @@
 import * as authService from './auth.service';
+import * as calService from './../calendar/calendar.service';
 import { Events } from './../events';
 
 const BASE_URL = 'https://api.monzo.com';
@@ -10,16 +11,20 @@ export function init() {
   accountId = localStorage.getItem('session.accountId');
 
   if (sessionToken && accountId) {
+    getTransactions();
   } else {
+    const stateToken = localStorage.getItem('session.stateToken');
     const url = new URL(window.location.href);
     const code = url.searchParams.get('code');
     const state = url.searchParams.get('state');
 
-    if (code && state) {
+    localStorage.clear();
+
+    if (code && state && stateToken) {
       window.history.replaceState({}, document.title, '/');
 
-      if (state !== process.env.STATE_TOKEN) {
-        console.error(`State token '${state}' does not match local token`);
+      if (state !== stateToken) {
+        console.error(`State parameter '${state}' does not match '${stateToken}'`);
         return;
       }
 
@@ -40,9 +45,19 @@ export function init() {
   }
 }
 
-export function getAccountId() {
+function getAccountId() {
   return get('/accounts', {
     account_type: 'uk_retail',
+  });
+}
+
+function getTransactions() {
+  return get('/transactions', {
+    account_id: accountId,
+    since: calService.getStartDate().toISOString(),
+  })
+  .then(res => {
+    console.log(res);
   });
 }
 

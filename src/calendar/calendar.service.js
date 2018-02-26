@@ -10,11 +10,15 @@ export const WEEKDAYS = [
   'Sunday',
 ];
 
+let startDate;
+let endDate;
+
 export function getCalendar() {
   const now = moment();
-  const startDate = getStartDate(now);
-  const endDate = getEndDate(now);
   const calendar = [];
+
+  startDate = getStartDate(now);
+  endDate = getEndDate(now);
 
   for (let m = startDate.clone(); m.isBefore(endDate); m.add(1, 'days')) {
     calendar.push(getDayObject(m, now));
@@ -23,12 +27,16 @@ export function getCalendar() {
   return calendar;
 }
 
-function getStartDate(now) {
+export function getStartDate(now) {
+  if (!now) return startDate;
+
   const startOfMonth = now.clone().startOf('month');
   return startOfMonth.subtract(startOfMonth.isoWeekday() - 1, 'days');
 }
 
-function getEndDate(now) {
+export function getEndDate(now) {
+  if (!now) return endDate;
+
   const endOfMonth = now.clone().endOf('month');
   return endOfMonth.add(7 - endOfMonth.isoWeekday(), 'days');
 }
