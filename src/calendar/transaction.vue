@@ -1,10 +1,11 @@
 <template>
-  <div></div>
+  <div>{{ trans.category }}</div>
 </template>
 
 <script>
 export default {
   name: 'transaction',
+  props: ['trans'],
 };
 </script>
 

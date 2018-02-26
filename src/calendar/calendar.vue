@@ -8,6 +8,7 @@
 <script>
 import * as calService from './calendar.service';
 import Day from './day.vue';
+import { events, Event } from './../events';
 
 export default {
   name: 'calendar',
@@ -16,6 +17,11 @@ export default {
       calData: calService.getCalendar(),
       weekdays: calService.WEEKDAYS,
     }
+  },
+  created() {
+    events.$on(Event.TRANS_LOADED, trans => {
+      calService.setTransactions(this.calData, trans);
+    });
   },
   components: {
     Day

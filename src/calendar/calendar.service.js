@@ -41,6 +41,24 @@ export function getEndDate(now) {
   return endOfMonth.add(7 - endOfMonth.isoWeekday(), 'days');
 }
 
+export function setTransactions(calendar, trans) {
+  if (!trans.length) return;
+
+  let offset = 0;
+
+  for (let i = 0; i < trans.length; ++i) {
+    offset = findDayIndex(calendar, trans[i].created, offset);
+
+    if (calendar[offset].trans) {
+      calendar[offset].trans.push(trans[i]);
+    } else {
+      calendar[offset].trans = [trans[i]];
+    }
+  }
+
+  console.log(calendar);
+}
+
 function getDayObject(day, now) {
   const date = day.clone();
 
@@ -52,4 +70,15 @@ function getDayObject(day, now) {
     date,
     events: {},
   };
+}
+
+function findDayIndex(calendar, date, offset) {
+  const momentDate = moment(date);
+
+  for (let i = offset; i < calendar.length; ++i) {
+    if (calendar[i].date.isSame(momentDate, 'day')) {
+      return i;
+    }
+  }
+  return 0;
 }

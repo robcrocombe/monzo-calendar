@@ -1,6 +1,6 @@
 import * as authService from './auth.service';
 import * as calService from './../calendar/calendar.service';
-import { Events } from './../events';
+import { events, Event } from './../events';
 
 const BASE_URL = 'https://api.monzo.com';
 let sessionToken;
@@ -11,7 +11,7 @@ export function init() {
   accountId = localStorage.getItem('session.accountId');
 
   if (sessionToken && accountId) {
-    // getTransactions();
+    getTransactions().then(res => events.$emit(Event.TRANS_LOADED, res.transactions));
   } else {
     const stateToken = localStorage.getItem('session.stateToken');
     const url = new URL(window.location.href);
@@ -40,7 +40,7 @@ export function init() {
           localStorage.setItem('session.accountId', accountId);
         });
     } else {
-      Events.$emit('logged-out');
+      events.$emit(Event.LOGGED_OUT);
     }
   }
 }
@@ -57,6 +57,7 @@ function getTransactions() {
     since: calService.getStartDate().toISOString(),
   }).then(res => {
     console.log(res);
+    return res;
   });
 }
 

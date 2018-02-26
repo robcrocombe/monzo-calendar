@@ -15,7 +15,7 @@
 
 <script>
 import * as authService from './monzo/auth.service';
-import { Events } from './events';
+import { events, Event } from './events';
 
 export default {
   name: 'navBar',
@@ -30,7 +30,7 @@ export default {
     },
   },
   created() {
-    Events.$on('logged-out', () => {
+    events.$on(Event.LOGGED_OUT, () => {
       this.showLoginButton = true;
     });
   },

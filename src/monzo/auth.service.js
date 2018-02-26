@@ -32,7 +32,7 @@ export function getToken(authCode) {
 
 function setStateToken() {
   // Generate random token
-  stateToken =
+  const stateToken =
     'id-' +
     Math.random()
       .toString(36)
