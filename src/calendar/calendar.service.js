@@ -56,7 +56,7 @@ export function setTransactions(calendar, trans) {
     }
   }
 
-  console.log(calendar);
+  console.log('Trans loaded:', calendar);
 }
 
 function getDayObject(day, now) {

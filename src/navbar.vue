@@ -5,6 +5,7 @@
         Monzo Calendar
       </div>
     </div>
+    <div class="navbar-item">Balance: {{ balance.balance / 100 }}</div>
     <div class="navbar-end" v-if="showLoginButton">
       <div class="navbar-item">
         <a type="button" class="button is-primary" v-bind:href="monzoLoginUrl">Login with Monzo</a>
@@ -22,6 +23,9 @@ export default {
   data() {
     return {
       showLoginButton: false,
+      balance: {
+        balance: 0,
+      },
     };
   },
   computed: {
@@ -32,6 +36,10 @@ export default {
   created() {
     events.$on(Event.LOGGED_OUT, () => {
       this.showLoginButton = true;
+    });
+
+    events.$on(Event.BALANCE_LOADED, res => {
+      this.balance = res;
     });
   },
 };

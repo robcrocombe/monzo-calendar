@@ -12,6 +12,7 @@ export function init() {
 
   if (sessionToken && accountId) {
     getTransactions().then(res => events.$emit(Event.TRANS_LOADED, res.transactions));
+    getBalance().then(res => events.$emit(Event.BALANCE_LOADED, res));
   } else {
     const stateToken = localStorage.getItem('session.stateToken');
     const url = new URL(window.location.href);
@@ -58,6 +59,12 @@ function getTransactions() {
   }).then(res => {
     console.log(res);
     return res;
+  });
+}
+
+function getBalance() {
+  return get('/balance', {
+    account_id: accountId,
   });
 }
 
