@@ -48,12 +48,7 @@ export function setTransactions(calendar, trans) {
 
   for (let i = 0; i < trans.length; ++i) {
     offset = findDayIndex(calendar, trans[i].created, offset);
-
-    if (calendar[offset].trans) {
-      calendar[offset].trans.push(trans[i]);
-    } else {
-      calendar[offset].trans = [trans[i]];
-    }
+    calendar[offset].trans.push(trans[i]);
   }
 
   console.log('Trans loaded:', calendar);
@@ -68,7 +63,7 @@ function getDayObject(day, now) {
     weekDay: date.isoWeekday(),
     isWeekend: date.isoWeekday() > 5,
     date,
-    events: {},
+    trans: [],
   };
 }
 
