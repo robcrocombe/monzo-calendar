@@ -714,7 +714,7 @@ babel-plugin-transform-strict-mode@^6.24.1:
     babel-runtime "^6.22.0"
     babel-types "^6.24.1"
 
-babel-polyfill@^6.26.0:
+babel-polyfill@6.26.0, babel-polyfill@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.26.0.tgz#379937abc67d7895970adc621f284cd966cf2153"
   dependencies:
@@ -1717,7 +1717,7 @@ cssom@0.3.x, "cssom@>= 0.3.2 < 0.4.0":
   dependencies:
     cssom "0.3.x"
 
-currency-formatter@^1.4.2:
+currency-formatter@1.4.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/currency-formatter/-/currency-formatter-1.4.2.tgz#9da20b3706f7a42daf73b356b09a2a2b76ff3870"
   dependencies:

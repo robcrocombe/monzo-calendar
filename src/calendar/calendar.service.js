@@ -58,11 +58,12 @@ function getDayObject(day, now) {
   const date = day.clone();
 
   return {
+    date,
     isToday: date.isSame(now, 'day'),
     isCurrentMonth: date.isSame(now, 'month'),
-    weekDay: date.isoWeekday(),
     isWeekend: date.isoWeekday() > 5,
-    date,
+    isFuture: date.isSameOrAfter(now, 'day'),
+    weekDay: date.isoWeekday(),
     trans: [],
   };
 }

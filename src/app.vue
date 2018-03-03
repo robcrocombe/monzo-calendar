@@ -18,9 +18,9 @@ export default {
   },
   components: {
     Calendar,
-    NavBar
-  }
-}
+    NavBar,
+  },
+};
 </script>
 
 <style lang="css">

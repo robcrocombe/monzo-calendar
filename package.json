@@ -7,14 +7,14 @@
     "start": "parcel ./index.html",
     "create-env": "cp .env.sample .env",
     "lint": "npm run lint:prettier && npm run lint:js && npm run lint:scss",
-    "lint:prettier": "npm run prettier -- -l 'src/**/*.js' || exit 0",
+    "lint:prettier": "npm run prettier -- -l 'src/**/*.{js,vue}' || exit 0",
     "lint:js": "eslint --format=node_modules/eslint-codeframe-formatter --ignore-path .gitignore src/",
     "lint:scss": "stylelint \"**/*.scss\" --syntax scss",
     "prettier": "prettier --write",
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "src/**/*.js": [
+    "src/**/*.{js,vue}": [
       "npm run prettier",
       "git add"
     ]
@@ -32,12 +32,12 @@
   "dependencies": {
     "autoprefixer": "8.0.0",
     "babel-cli": "6.26.0",
-    "babel-polyfill": "^6.26.0",
+    "babel-polyfill": "6.26.0",
     "babel-preset-env": "1.6.1",
     "babel-register": "6.26.0",
     "bulma": "0.6.2",
     "css-loader": "0.28.10",
-    "currency-formatter": "^1.4.2",
+    "currency-formatter": "1.4.2",
     "moment": "2.20.1",
     "node-sass": "4.7.2",
     "parcel-bundler": "1.6.2",

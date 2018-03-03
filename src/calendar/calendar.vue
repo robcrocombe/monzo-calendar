@@ -16,7 +16,7 @@ export default {
     return {
       calData: calService.getCalendar(),
       weekdays: calService.WEEKDAYS,
-    }
+    };
   },
   created() {
     events.$on(Event.TRANS_LOADED, res => {
@@ -24,9 +24,9 @@ export default {
     });
   },
   components: {
-    Day
-  }
-}
+    Day,
+  },
+};
 </script>
 
 <style lang="css">
