@@ -11,6 +11,8 @@ import NavBar from './navbar.vue';
 
 import * as apiService from './monzo/api.service';
 
+console.clear();
+
 export default {
   name: 'app',
   mounted() {

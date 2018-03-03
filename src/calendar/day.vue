@@ -3,25 +3,25 @@
     <span v-bind:class="{ 'has-text-weight-bold': day.isToday }">{{ title }}</span>
     <button
       v-if="day.isFuture"
-      v-on:click="newTrans"
+      v-on:click="newAction"
       type="button"
-      class="button is-white is-small add-trans-btn">
+      class="button is-white is-small add-action-btn">
       +</button>
     <div>
-      <transaction v-for="t in day.trans" :trans="t"></transaction>
+      <action v-for="t in day.actions" :data="t"></action>
     </div>
   </div>
 </template>
 
 <script>
-import Transaction from './transaction.vue';
+import Action from './action.vue';
 
 export default {
   name: 'day',
   props: ['day'],
   data() {
     return {
-      newTransOpen: false,
+      newActionOpen: false,
     };
   },
   computed: {
@@ -33,12 +33,12 @@ export default {
     },
   },
   methods: {
-    newTrans() {
-      this.newTransOpen = true;
+    newAction() {
+      this.newActionOpen = true;
     },
   },
   components: {
-    Transaction,
+    Action,
   },
 };
 </script>

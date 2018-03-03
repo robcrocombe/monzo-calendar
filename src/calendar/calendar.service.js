@@ -41,17 +41,17 @@ export function getEndDate(now) {
   return endOfMonth.add(7 - endOfMonth.isoWeekday(), 'days');
 }
 
-export function setTransactions(calendar, trans) {
-  if (!trans.length) return;
+export function setActions(calendar, actions) {
+  if (!actions.length) return;
 
   let offset = 0;
 
-  for (let i = 0; i < trans.length; ++i) {
-    offset = findDayIndex(calendar, trans[i].created, offset);
-    calendar[offset].trans.push(trans[i]);
+  for (let i = 0; i < actions.length; ++i) {
+    offset = findDayIndex(calendar, actions[i].created, offset);
+    calendar[offset].actions.push(actions[i]);
   }
 
-  console.log('Trans loaded:', calendar);
+  console.log('Transactions loaded:', calendar);
 }
 
 function getDayObject(day, now) {
@@ -64,7 +64,7 @@ function getDayObject(day, now) {
     isWeekend: date.isoWeekday() > 5,
     isFuture: date.isSameOrAfter(now, 'day'),
     weekDay: date.isoWeekday(),
-    trans: [],
+    actions: [],
   };
 }
 

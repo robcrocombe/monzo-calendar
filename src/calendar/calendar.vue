@@ -20,7 +20,7 @@ export default {
   },
   created() {
     events.$on(Event.TRANS_LOADED, res => {
-      calService.setTransactions(this.calData, res);
+      calService.setActions(this.calData, res);
     });
   },
   components: {
