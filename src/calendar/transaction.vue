@@ -1,5 +1,5 @@
 <template>
-  <div>{{ trans.category }}</div>
+  <div class="tag" :class="trans.category">{{ trans.category }}</div>
 </template>
 
 <script>

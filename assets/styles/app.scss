@@ -1,33 +1,4 @@
 @import 'bulma-import';
 @import 'helpers';
-
-.calendar {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-auto-flow: row dense;
-  grid-gap: 0.8rem;
-  margin: 1rem;
-}
-
-.box-date {
-  position: relative;
-}
-
-.box-date::after {
-  @apply(box);
-  content: '';
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: $box-radius;
-  box-shadow: 0 5px 10px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
-  opacity: 0;
-  transition: opacity 0.1s ease-in-out;
-}
-
-.box-date:hover::after {
-  opacity: 1;
-}
+@import 'transactions';
+@import 'calendar';

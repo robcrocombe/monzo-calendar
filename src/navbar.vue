@@ -5,16 +5,21 @@
         Monzo Calendar
       </div>
     </div>
-    <div class="navbar-item">Balance: {{ balance.balance / 100 }}</div>
-    <div class="navbar-end" v-if="showLoginButton">
-      <div class="navbar-item">
-        <a type="button" class="button is-primary" v-bind:href="monzoLoginUrl">Login with Monzo</a>
+    <div class="navbar-item">Balance: {{ uiBalance }}</div>
+    <div class="navbar-end">
+      <div class="navbar-item" v-if="showLoginButton">
+        <a class="button is-primary" v-bind:href="monzoLoginUrl">Login with Monzo</a>
+      </div>
+      <div class="navbar-item" v-else>
+        <button type="button" class="button" v-on:click="logout">Log out</button>
       </div>
     </div>
   </nav>
 </template>
 
 <script>
+import currency from 'currency-formatter';
+
 import * as authService from './monzo/auth.service';
 import { events, Event } from './events';
 
@@ -23,7 +28,7 @@ export default {
   data() {
     return {
       showLoginButton: false,
-      balance: {
+      account: {
         balance: 0,
       },
     };
@@ -32,6 +37,9 @@ export default {
     monzoLoginUrl() {
       return authService.loginUrl();
     },
+    uiBalance() {
+      return currency.format(this.account.balance / 100, { code: this.account.currency });
+    },
   },
   created() {
     events.$on(Event.LOGGED_OUT, () => {
@@ -39,8 +47,14 @@ export default {
     });
 
     events.$on(Event.BALANCE_LOADED, res => {
-      this.balance = res;
+      this.account = res;
     });
+  },
+  methods: {
+    logout() {
+      localStorage.clear();
+      location.reload();
+    },
   },
 };
 </script>

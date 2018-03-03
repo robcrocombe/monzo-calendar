@@ -11,8 +11,7 @@ export function init() {
   accountId = localStorage.getItem('session.accountId');
 
   if (sessionToken && accountId) {
-    getTransactions().then(res => events.$emit(Event.TRANS_LOADED, res.transactions));
-    getBalance().then(res => events.$emit(Event.BALANCE_LOADED, res));
+    initData();
   } else {
     const stateToken = localStorage.getItem('session.stateToken');
     const url = new URL(window.location.href);
@@ -39,11 +38,21 @@ export function init() {
         .then(res => {
           accountId = res.accounts[0].id;
           localStorage.setItem('session.accountId', accountId);
-        });
+        })
+        .then(initData);
     } else {
       events.$emit(Event.LOGGED_OUT);
     }
   }
+}
+
+function initData() {
+  getTransactions()
+    .then(res => events.$emit(Event.TRANS_LOADED, res.transactions))
+    .catch(handleFetchError);
+  getBalance()
+    .then(res => events.$emit(Event.BALANCE_LOADED, res))
+    .catch(handleFetchError);
 }
 
 function getAccountId() {
@@ -56,9 +65,6 @@ function getTransactions() {
   return get('/transactions', {
     account_id: accountId,
     since: calService.getStartDate().toISOString(),
-  }).then(res => {
-    console.log(res);
-    return res;
   });
 }
 
@@ -78,7 +84,22 @@ function get(url, params) {
     headers: {
       authorization: `Bearer ${sessionToken}`,
     },
-  }).then(resp => resp.json());
+  }).then(async res => {
+    const body = await res.json();
+
+    if (res.ok) {
+      return body;
+    }
+
+    const err = new Error();
+    err.name = body.code || resp.status;
+    err.message = body.message || resp.statusText;
+    throw err;
+  });
+}
+
+function handleFetchError(e) {
+  console.error(`${e.name}: ${e.message}`);
 }
 
 function getQueryString(params) {
