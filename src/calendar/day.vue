@@ -9,13 +9,15 @@
       class="button is-white is-small add-action-btn">
       +</button>
     <div>
-      <action v-for="t in day.actions" :data="t"></action>
+      <past-action v-for="t in day.actions.past" :data="t"></past-action>
+      <planned-action v-for="t in day.actions.planned" :data="t"></planned-action>
     </div>
   </div>
 </template>
 
 <script>
-import Action from './action.vue';
+import PastAction from './past-action.vue';
+import PlannedAction from './planned-action.vue';
 import { events, Event } from './../events';
 
 export default {
@@ -35,7 +37,8 @@ export default {
     },
   },
   components: {
-    Action,
+    PastAction,
+    PlannedAction,
   },
 };
 </script>

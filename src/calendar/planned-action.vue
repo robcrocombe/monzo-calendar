@@ -1,10 +1,10 @@
 <template>
-  <div class="tag" :class="data.category">{{ data.category }}</div>
+  <div class="tag">{{ data.name }}</div>
 </template>
 
 <script>
 export default {
-  name: 'action',
+  name: 'plannedAction',
   props: ['data'],
 };
 </script>

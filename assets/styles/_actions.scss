@@ -1,5 +1,11 @@
 $categories: mondo general eating_out expenses transport cash bills entertainment shopping holidays groceries;
-$cat-colors: #4CAF50 #607D8B #E91E63 #795548 #3F51B5 #009688 #03A9F4 #FF5722 #9C27B0 #673AB7 #FFAB00;
+$cat-colors: #4caf50 #607d8b #e91e63 #795548 #3f51b5 #009688 #03a9f4 #ff5722 #9c27b0 #673ab7 #f0b400;
+
+.calendar .tag {
+  display: flex;
+  margin: 0.125rem 0 0 0;
+  border: 1px solid mix(white, black, 75%);
+}
 
 @each $cat in $categories {
   $cat-color: nth($cat-colors, index($categories, $cat));
@@ -8,6 +14,5 @@ $cat-colors: #4CAF50 #607D8B #E91E63 #795548 #3F51B5 #009688 #03A9F4 #FF5722 #9C
     background-color: mix(white, $cat-color, 95%);
     border: 1px solid mix(white, $cat-color, 50%);
     color: $cat-color;
-    margin: 0.15rem 0 0 0;
   }
 }

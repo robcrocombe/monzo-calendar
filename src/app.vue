@@ -10,6 +10,7 @@ import Calendar from './calendar/calendar.vue';
 import NavBar from './navbar.vue';
 
 import * as apiService from './monzo/api.service';
+import * as actionService from './action/action.service';
 
 console.clear();
 
@@ -17,6 +18,7 @@ export default {
   name: 'app',
   mounted() {
     apiService.init();
+    actionService.init();
   },
   components: {
     Calendar,

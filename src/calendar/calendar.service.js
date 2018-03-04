@@ -12,6 +12,7 @@ export const WEEKDAYS = [
 
 let startDate;
 let endDate;
+let offsetMonth = 0;
 
 export function getCalendar() {
   const now = moment();
@@ -31,14 +32,16 @@ export function getStartDate(now) {
   if (!now) return startDate;
 
   const startOfMonth = now.clone().startOf('month');
-  return startOfMonth.subtract(startOfMonth.isoWeekday() - 1, 'days');
+  return startOfMonth
+    .subtract(offsetMonth, 'month')
+    .subtract(startOfMonth.isoWeekday() - 1, 'days');
 }
 
 export function getEndDate(now) {
   if (!now) return endDate;
 
   const endOfMonth = now.clone().endOf('month');
-  return endOfMonth.add(7 - endOfMonth.isoWeekday(), 'days');
+  return endOfMonth.subtract(offsetMonth, 'month').add(7 - endOfMonth.isoWeekday(), 'days');
 }
 
 export function setActions(calendar, actions) {
@@ -48,10 +51,8 @@ export function setActions(calendar, actions) {
 
   for (let i = 0; i < actions.length; ++i) {
     offset = findDayIndex(calendar, actions[i].created, offset);
-    calendar[offset].actions.push(actions[i]);
+    calendar[offset].actions.past.push(actions[i]);
   }
-
-  console.log('Transactions loaded:', calendar);
 }
 
 function getDayObject(day, now) {
@@ -64,7 +65,10 @@ function getDayObject(day, now) {
     isWeekend: date.isoWeekday() > 5,
     isFuture: date.isSameOrAfter(now, 'day'),
     weekDay: date.isoWeekday(),
-    actions: [],
+    actions: {
+      past: [],
+      planned: [],
+    },
   };
 }
 

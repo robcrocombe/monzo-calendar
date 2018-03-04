@@ -47,7 +47,7 @@ export function init() {
 }
 
 function initData() {
-  getActions()
+  getTransactions()
     .then(res => events.$emit(Event.TRANS_LOADED, res.transactions))
     .catch(handleFetchError);
   getBalance()
@@ -61,10 +61,11 @@ function getAccountId() {
   });
 }
 
-function getActions() {
+function getTransactions() {
   return get('/transactions', {
     account_id: accountId,
     since: calService.getStartDate().toISOString(),
+    before: calService.getEndDate().toISOString(),
   });
 }
 
