@@ -1,6 +1,6 @@
 <template>
   <div class="tag">
-    <span>{{ data.name }}</span>
+    <span class="truncate">{{ data.name }}</span>
     <span>{{ amount }}</span>
   </div>
 </template>
@@ -11,7 +11,11 @@ export default {
   props: ['data'],
   computed: {
     amount() {
-      return this.formatCurrency(this.data.amount, 'GBP');
+      const value = this.formatCurrency(this.data.amount, 'GBP');
+      if (this.data.type === 'credit') {
+        return `+${value}`;
+      }
+      return value;
     },
   },
 };

@@ -9,9 +9,14 @@
 .box-date {
   position: relative;
   padding: 1rem;
+  overflow: hidden;
+
+  & span:first-child {
+    margin-right: 0.063em;
+  }
 
   &:hover .add-action-btn {
-    display: block;
+    display: flex;
   }
 }
 
@@ -34,11 +39,14 @@
   opacity: 1;
 }
 
-.add-action-btn {
+.button.add-action-btn {
   display: none;
   position: absolute;
-  top: 0.9rem;
-  right: 0.7rem;
+  top: 0.95rem;
+  right: 0.6rem;
+  padding-top: 3px;
   font-weight: 700;
-  height: 25px;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
 }
