@@ -46,7 +46,6 @@ export default {
       return authService.loginUrl();
     },
     currentBalance() {
-      console.log(this.account.balance);
       return this.formatCurrency(this.account.balance, this.account.currency);
     },
     plannedBalance() {

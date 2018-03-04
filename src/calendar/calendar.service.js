@@ -44,14 +44,14 @@ export function getEndDate(now) {
   return endOfMonth.subtract(offsetMonth, 'month').add(7 - endOfMonth.isoWeekday(), 'days');
 }
 
-export function setActions(calendar, actions) {
+export function setActions(calendar, actions, type) {
   if (!actions.length) return;
 
   let offset = 0;
 
   for (let i = 0; i < actions.length; ++i) {
     offset = findDayIndex(calendar, actions[i].created, offset);
-    calendar[offset].actions.past.push(actions[i]);
+    calendar[offset].actions[type].push(actions[i]);
   }
 }
 

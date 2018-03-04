@@ -1,5 +1,5 @@
 <template>
-  <div class="tag">
+  <div class="tag future">
     <span class="truncate">{{ data.name }}</span>
     <span>{{ amount }}</span>
   </div>

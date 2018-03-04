@@ -9,11 +9,37 @@ $cat-colors: #4caf50 #607d8b #e91e63 #795548 #3f51b5 #009688 #03a9f4 #ff5722 #9c
   color: hsl(0, 0%, 30%);
 }
 
+.tag.future {
+  background: repeating-linear-gradient(
+    -50deg,
+    mix(white, black, 93%),
+    mix(white, black, 93%) 10px,
+    mix(white, black, 96%) 10px,
+    mix(white, black, 96%) 20px
+  );
+}
+
 @each $cat in $categories {
   $cat-color: nth($cat-colors, index($categories, $cat));
 
   .tag.#{$cat} {
     background-color: mix(white, $cat-color, 95%);
+    border: 1px solid mix(white, $cat-color, 50%);
+    color: $cat-color;
+  }
+}
+
+@each $cat in $categories {
+  $cat-color: nth($cat-colors, index($categories, $cat));
+
+  .tag.future.#{$cat} {
+    background: repeating-linear-gradient(
+      -50deg,
+      mix(white, $cat-color, 90%),
+      mix(white, $cat-color, 90%) 10px,
+      mix(white, $cat-color, 95%) 10px,
+      mix(white, $cat-color, 95%) 20px
+    );
     border: 1px solid mix(white, $cat-color, 50%);
     color: $cat-color;
   }
