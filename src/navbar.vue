@@ -8,10 +8,10 @@
     <div class="navbar-item">Balance: {{ uiBalance }}</div>
     <div class="navbar-end">
       <div class="navbar-item" v-if="showLoginButton">
-        <a class="button is-primary" v-bind:href="monzoLoginUrl">Login with Monzo</a>
+        <a class="button is-primary" :href="monzoLoginUrl">Login with Monzo</a>
       </div>
       <div class="navbar-item" v-else>
-        <button type="button" class="button" v-on:click="logout">Log out</button>
+        <button type="button" class="button" @click="logout">Log out</button>
       </div>
     </div>
   </nav>

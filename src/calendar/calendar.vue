@@ -1,13 +1,17 @@
 <template>
-  <div class="calendar">
-    <div v-for="day in weekdays">{{ day }}</div>
-    <day v-for="day in calData" :day="day"></day>
+  <div>
+    <div class="calendar">
+      <div v-for="day in weekdays">{{ day }}</div>
+      <day v-for="day in calData" :day="day"></day>
+    </div>
+    <action-modal></action-modal>
   </div>
 </template>
 
 <script>
 import * as calService from './calendar.service';
 import Day from './day.vue';
+import ActionModal from './../action/action-modal.vue';
 import { events, Event } from './../events';
 
 export default {
@@ -25,6 +29,7 @@ export default {
   },
   components: {
     Day,
+    ActionModal,
   },
 };
 </script>

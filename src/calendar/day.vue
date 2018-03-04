@@ -1,10 +1,11 @@
 <template>
   <div class="box box-date">
-    <span v-bind:class="{ 'has-text-weight-bold': day.isToday }">{{ title }}</span>
+    <span :class="{ 'has-text-weight-bold': day.isToday }">{{ title }}</span>
     <button
       v-if="day.isFuture"
-      v-on:click="newAction"
+      @click="newAction"
       type="button"
+      title="Plan a transaction"
       class="button is-white is-small add-action-btn">
       +</button>
     <div>
@@ -15,15 +16,11 @@
 
 <script>
 import Action from './action.vue';
+import { events, Event } from './../events';
 
 export default {
   name: 'day',
   props: ['day'],
-  data() {
-    return {
-      newActionOpen: false,
-    };
-  },
   computed: {
     title() {
       if (this.day.date.date() === 1) {
@@ -34,7 +31,7 @@ export default {
   },
   methods: {
     newAction() {
-      this.newActionOpen = true;
+      events.$emit(Event.START_NEW_ACTION, this.day);
     },
   },
   components: {

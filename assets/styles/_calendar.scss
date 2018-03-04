@@ -9,10 +9,14 @@
 .box-date {
   position: relative;
   padding: 1rem;
+
+  &:hover .add-action-btn {
+    display: block;
+  }
 }
 
 .box-date::after {
-  @apply(box);
+  display: block;
   content: '';
   z-index: -1;
   width: 100%;
@@ -31,6 +35,10 @@
 }
 
 .add-action-btn {
+  display: none;
+  position: absolute;
+  top: 0.9rem;
+  right: 0.7rem;
   font-weight: 700;
-  float: right;
+  height: 25px;
 }
