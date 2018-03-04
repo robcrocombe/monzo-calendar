@@ -1,28 +1,30 @@
 <template>
   <modal :title="'Plan a new transaction'" :visible="visible" @close="close">
-    <div class="field">
-      <label class="label" for="name">Name</label>
-      <div class="control">
-        <input class="input" type="text" name="name" ref="name" v-model="form.name">
+    <div @keydown.enter="save">
+      <div class="field">
+        <label class="label" for="name">Name</label>
+        <div class="control">
+          <input class="input" type="text" name="name" ref="name" v-model="form.name">
+        </div>
       </div>
-    </div>
-    <div class="field">
-      <label class="label" for="type">Type</label>
-      <div class="control">
-        <label class="radio">
-          <input type="radio" name="type" v-model="form.type" :value="'debit'">
-          Debit
-        </label>
-        <label class="radio">
-          <input type="radio" name="type" v-model="form.type" :value="'credit'">
-          Credit
-        </label>
+      <div class="field">
+        <label class="label" for="type">Type</label>
+        <div class="control">
+          <label class="radio">
+            <input type="radio" name="type" v-model="form.type" :value="'debit'">
+            Debit
+          </label>
+          <label class="radio">
+            <input type="radio" name="type" v-model="form.type" :value="'credit'">
+            Credit
+          </label>
+        </div>
       </div>
-    </div>
-    <div class="field">
-      <label class="label" for="name">Amount</label>
-      <div class="control">
-        <input class="input" type="number" name="amount" step="0.01" min="0.01" v-model="form.amount">
+      <div class="field">
+        <label class="label" for="name">Amount</label>
+        <div class="control">
+          <input class="input" type="number" name="amount" step="0.01" min="0.01" v-model="form.amount">
+        </div>
       </div>
     </div>
 
@@ -68,9 +70,14 @@ export default {
       this.form = defaultFormData();
     },
     save() {
-      this.visible = false;
-      actionService.addPlannedAction(this.day, this.form);
-      this.form = defaultFormData();
+      if (this.validForm()) {
+        this.visible = false;
+        actionService.addPlannedAction(this.day, this.form);
+        this.form = defaultFormData();
+      }
+    },
+    validForm() {
+      return !!(this.form.name && this.form.type && this.form.amount);
     },
   },
   components: {

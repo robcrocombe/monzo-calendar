@@ -5,7 +5,15 @@
         Monzo Calendar
       </div>
     </div>
-    <div class="navbar-item">Balance: {{ uiBalance }}</div>
+    <div class="navbar-item">Current Balance:&nbsp;
+      <span class="has-text-info">{{ currentBalance }}</span>
+    </div>
+    <div class="navbar-item">Planned Balance:&nbsp;
+      <span class="has-text-info">{{ plannedBalance }}</span>
+    </div>
+    <div class="navbar-item" title="Profit/Loss">P/L:&nbsp;
+      <span :class="{ 'has-text-success': diffAmount > 0, 'has-text-danger': diffAmount < 0 }">{{ diff }}</span>
+    </div>
     <div class="navbar-end">
       <div class="navbar-item" v-if="showLoginButton">
         <a class="button is-primary" :href="monzoLoginUrl">Login with Monzo</a>
@@ -18,8 +26,6 @@
 </template>
 
 <script>
-import currency from 'currency-formatter';
-
 import * as authService from './monzo/auth.service';
 import { events, Event } from './events';
 
@@ -31,14 +37,24 @@ export default {
       account: {
         balance: 0,
       },
+      newBalance: 0,
+      diffAmount: 0,
     };
   },
   computed: {
     monzoLoginUrl() {
       return authService.loginUrl();
     },
-    uiBalance() {
-      return currency.format(this.account.balance / 100, { code: this.account.currency });
+    currentBalance() {
+      console.log(this.account.balance);
+      return this.formatCurrency(this.account.balance, this.account.currency);
+    },
+    plannedBalance() {
+      return this.formatCurrency(this.newBalance, this.account.currency);
+    },
+    diff() {
+      this.diffAmount = this.newBalance - this.account.balance;
+      return this.formatCurrency(this.diffAmount, this.account.currency, true, { symbol: '' });
     },
   },
   created() {
@@ -48,6 +64,11 @@ export default {
 
     events.$on(Event.BALANCE_LOADED, res => {
       this.account = res;
+      this.newBalance = res.balance;
+    });
+
+    events.$on(Event.SAVED_NEW_ACTION, newBalance => {
+      this.newBalance = newBalance;
     });
   },
   methods: {

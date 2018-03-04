@@ -1,15 +1,14 @@
+import currency from 'currency-formatter';
 import { events, Event } from './../events';
 
 const plannedActions = [];
 let originalBalance = 0;
 let finalBalance = 0;
-let currency = '';
 
 export function init() {
   events.$on(Event.BALANCE_LOADED, res => {
     originalBalance = res.balance;
     finalBalance = res.balance;
-    currency = res.currency;
   });
 }
 
@@ -22,8 +21,19 @@ export function addPlannedAction(day, action) {
   day.actions.planned.push(action);
   plannedActions.push(action);
   calculateFinalBalance();
-  console.log(finalBalance / 100);
+  events.$emit(Event.SAVED_NEW_ACTION, finalBalance);
 }
+
+export function formatCurrency(val, code, disableAbs, options) {
+  const value = (disableAbs ? val : Math.abs(val)) / 100;
+  return currency.format(value, { code, ...options });
+}
+
+export const formatCurrencyMixin = {
+  methods: {
+    formatCurrency,
+  },
+};
 
 function calculateFinalBalance() {
   finalBalance = originalBalance;

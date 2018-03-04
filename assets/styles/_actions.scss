@@ -3,6 +3,7 @@ $cat-colors: #4caf50 #607d8b #e91e63 #795548 #3f51b5 #009688 #03a9f4 #ff5722 #9c
 
 .calendar .tag {
   display: flex;
+  justify-content: space-between;
   margin: 0.125rem 0 0 0;
   border: 1px solid mix(white, black, 75%);
 }
