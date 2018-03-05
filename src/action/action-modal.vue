@@ -7,27 +7,29 @@
           <input class="input" type="text" name="name" ref="name" v-model.trim="form.name">
         </div>
       </div>
-      <div class="field">
-        <label class="label" for="type">Type</label>
-        <div class="control">
-          <label class="radio">
-            <input type="radio" name="type" v-model="form.type" :value="'debit'">
-            Debit
-          </label>
-          <label class="radio">
-            <input type="radio" name="type" v-model="form.type" :value="'credit'">
-            Credit
-          </label>
+      <div class="columns">
+        <div class="field column is-one-third">
+          <label class="label" for="category">Category</label>
+          <div class="select">
+            <select name="category" v-model="form.category">
+              <option v-for="cat in categories" v-bind:value="cat.value">
+                {{ cat.label }}
+              </option>
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="field">
-        <label class="label" for="category">Category</label>
-        <div class="select">
-          <select name="category" v-model="form.category">
-            <option v-for="cat in categories" v-bind:value="cat.value">
-              {{ cat.label }}
-            </option>
-          </select>
+        <div class="field column">
+          <label class="label" for="type">Type</label>
+          <div class="control">
+            <label class="radio">
+              <input type="radio" name="type" v-model="form.type" :value="'debit'">
+              Debit
+            </label>
+            <label class="radio">
+              <input type="radio" name="type" v-model="form.type" :value="'credit'">
+              Credit
+            </label>
+          </div>
         </div>
       </div>
       <div class="field">
