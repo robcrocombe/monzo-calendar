@@ -7,7 +7,7 @@
       type="button"
       title="Plan a transaction"
       class="button is-white is-small add-action-btn">
-      +</button>
+    +</button>
     <div>
       <past-action v-for="t in day.actions.past" :data="t"></past-action>
       <planned-action v-for="t in day.actions.planned" :data="t"></planned-action>

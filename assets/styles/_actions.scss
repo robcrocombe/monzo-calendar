@@ -9,7 +9,7 @@ $cat-colors: #4caf50 #607d8b #e91e63 #795548 #3f51b5 #009688 #03a9f4 #ff5722 #9c
   color: hsl(0, 0%, 30%);
 }
 
-.tag.future {
+.tag.planned {
   background: repeating-linear-gradient(
     -50deg,
     mix(white, black, 93%),
@@ -32,7 +32,7 @@ $cat-colors: #4caf50 #607d8b #e91e63 #795548 #3f51b5 #009688 #03a9f4 #ff5722 #9c
 @each $cat in $categories {
   $cat-color: nth($cat-colors, index($categories, $cat));
 
-  .tag.future.#{$cat} {
+  .tag.planned.#{$cat} {
     background: repeating-linear-gradient(
       -50deg,
       mix(white, $cat-color, 90%),

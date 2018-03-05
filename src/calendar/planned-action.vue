@@ -1,5 +1,5 @@
 <template>
-  <div class="tag future">
+  <div class="tag planned" :class="data.category">
     <span class="truncate">{{ data.name }}</span>
     <span>{{ amount }}</span>
   </div>
@@ -12,10 +12,10 @@ export default {
   computed: {
     amount() {
       const value = this.formatCurrency(this.data.amount, 'GBP');
-      if (this.data.type === 'credit') {
-        return `+${value}`;
+      if (this.data.debit) {
+        return value;
       }
-      return value;
+      return `+${value}`;
     },
   },
 };

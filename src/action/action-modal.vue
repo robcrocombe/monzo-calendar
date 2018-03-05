@@ -4,7 +4,7 @@
       <div class="field">
         <label class="label" for="name">Name</label>
         <div class="control">
-          <input class="input" type="text" name="name" ref="name" v-model="form.name">
+          <input class="input" type="text" name="name" ref="name" v-model.trim="form.name">
         </div>
       </div>
       <div class="field">
@@ -21,9 +21,19 @@
         </div>
       </div>
       <div class="field">
+        <label class="label" for="category">Category</label>
+        <div class="select">
+          <select name="category" v-model="form.category">
+            <option v-for="cat in categories" v-bind:value="cat.value">
+              {{ cat.label }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
         <label class="label" for="name">Amount</label>
         <div class="control">
-          <input class="input" type="number" name="amount" step="0.01" min="0.01" v-model="form.amount">
+          <input class="input" type="number" name="amount" step="0.01" min="0.01" v-model.number="form.amount">
         </div>
       </div>
     </div>
@@ -45,6 +55,7 @@ function defaultFormData() {
     name: '',
     type: 'debit',
     amount: '1.00',
+    category: 'general',
   };
 }
 
@@ -55,6 +66,7 @@ export default {
       visible: false,
       form: defaultFormData(),
       day: null,
+      categories: actionService.categories,
     };
   },
   created() {

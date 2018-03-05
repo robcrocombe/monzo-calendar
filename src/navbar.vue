@@ -66,13 +66,14 @@ export default {
       this.newBalance = res.balance;
     });
 
-    events.$on(Event.SAVED_NEW_ACTION, newBalance => {
+    events.$on(Event.NEW_FINAL_BALANCE, newBalance => {
       this.newBalance = newBalance;
     });
   },
   methods: {
     logout() {
-      localStorage.clear();
+      localStorage.removeItem('session.token');
+      localStorage.removeItem('session.accountId');
       location.reload();
     },
   },
