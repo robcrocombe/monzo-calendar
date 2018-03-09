@@ -66,6 +66,7 @@ function initPlannedActions() {
   let actions = localStorage.getObject('data.actions') || [];
   const cachedLength = actions.length;
 
+  // Remove actions from past days
   actions = filterOldActions(actions);
 
   if (actions.length !== cachedLength) {

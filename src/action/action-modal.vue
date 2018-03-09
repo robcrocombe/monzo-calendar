@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="columns">
-        <div class="field column is-one-third">
+        <div class="column is-one-third">
           <label class="label" for="category">Category</label>
           <div class="select">
             <select name="category" v-model="form.category">
@@ -18,7 +18,7 @@
             </select>
           </div>
         </div>
-        <div class="field column">
+        <div class="column">
           <label class="label" for="type">Type</label>
           <div class="control">
             <label class="radio">
@@ -38,6 +38,21 @@
           <input class="input" type="number" name="amount" step="0.01" min="0.01" v-model.number="form.amount">
         </div>
       </div>
+    </div>
+
+    <div class="model-custom-date my2">
+      <label class="label">Additional dates</label>
+      <v-date-picker
+        mode="multiple"
+        v-model="datePicker.selectedValue"
+        :min-page="datePicker.minPage"
+        :max-page="datePicker.maxPage"
+        popover-visibility="visible"
+        nav-visibility="hidden"
+        :popover-keep-visible-on-input="true"
+        :input-props="datePicker.input"
+        @input="dateChanged">
+      </v-date-picker>
     </div>
 
     <div slot="footer">
@@ -69,6 +84,12 @@ export default {
       form: defaultFormData(),
       day: null,
       categories: actionService.categories,
+      datePicker: {
+        input: { class: 'input' },
+        minPage: { month: 3, year: 2018 },
+        maxPage: { month: 3, year: 2018 },
+        selectedValue: [],
+      },
     };
   },
   created() {
@@ -92,6 +113,9 @@ export default {
     },
     validForm() {
       return !!(this.form.name && this.form.type && this.form.amount);
+    },
+    dateChanged() {
+      console.log(this.datePicker.selectedValue);
     },
   },
   components: {

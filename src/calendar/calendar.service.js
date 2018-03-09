@@ -12,11 +12,11 @@ export const WEEKDAYS = [
 
 let startDate;
 let endDate;
+let calendar = [];
 let offsetMonth = 0;
 
-export function getCalendar() {
+export function initCalendar() {
   const now = moment();
-  const calendar = [];
 
   startDate = getStartDate(now);
   endDate = getEndDate(now);
@@ -44,13 +44,13 @@ export function getEndDate(now) {
   return endOfMonth.subtract(offsetMonth, 'month').add(7 - endOfMonth.isoWeekday(), 'days');
 }
 
-export function setActions(calendar, actions, type) {
+export function setActions(actions, type) {
   if (!actions.length) return;
 
   let offset = 0;
 
   for (let i = 0; i < actions.length; ++i) {
-    offset = findDayIndex(calendar, actions[i].created, offset);
+    offset = findDayIndex(actions[i].created, offset);
     calendar[offset].actions[type].push(actions[i]);
   }
 }
@@ -72,7 +72,7 @@ function getDayObject(day, now) {
   };
 }
 
-function findDayIndex(calendar, date, offset) {
+function findDayIndex(date, offset) {
   const momentDate = moment(date);
 
   for (let i = offset; i < calendar.length; ++i) {
