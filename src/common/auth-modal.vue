@@ -63,7 +63,7 @@ export default {
       return !!(this.form.clientId && this.form.clientSecret);
     },
     redirectUrl() {
-      return window.location.href;
+      return process.env.REDIRECT_URL;
     },
   },
   methods: {
