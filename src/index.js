@@ -4,6 +4,8 @@ import App from './app.vue';
 import VCalendar from 'v-calendar';
 import { formatCurrencyMixin } from './action/action.service';
 
+console.clear();
+
 Storage.prototype.setObject = function(key, value) {
   this.setItem(key, JSON.stringify(value));
 };

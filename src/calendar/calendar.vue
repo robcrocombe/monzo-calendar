@@ -19,14 +19,14 @@ export default {
   name: 'calendar',
   data() {
     return {
-      calData: calService.initCalendar(),
+      calData: calService.calendar,
       weekdays: calService.WEEKDAYS,
     };
   },
   created() {
     events.$on(Event.TRANS_LOADED, res => {
-      calService.setActions(res, 'past');
-      calService.setActions(actionService.plannedActions, 'planned');
+      calService.setPastActions(res);
+      calService.setPlannedActions(actionService.plannedActions);
     });
   },
   components: {

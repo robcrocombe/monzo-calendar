@@ -41,17 +41,16 @@
     </div>
 
     <div class="model-custom-date my2">
-      <label class="label">Additional dates</label>
+      <label class="label">Select dates</label>
       <v-date-picker
         mode="multiple"
-        v-model="datePicker.selectedValue"
-        :min-page="datePicker.minPage"
-        :max-page="datePicker.maxPage"
+        v-model="datePicker.selected"
         popover-visibility="visible"
         nav-visibility="hidden"
+        :min-date="datePicker.minDate"
+        :max-date="datePicker.maxDate"
         :popover-keep-visible-on-input="true"
-        :input-props="datePicker.input"
-        @input="dateChanged">
+        :input-props="datePicker.input">
       </v-date-picker>
     </div>
 
@@ -63,6 +62,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import Modal from './../modal.vue';
 import { events, Event } from './../events';
 import * as actionService from './action.service';
@@ -82,20 +82,29 @@ export default {
     return {
       visible: false,
       form: defaultFormData(),
-      day: null,
       categories: actionService.categories,
       datePicker: {
         input: { class: 'input' },
-        minPage: { month: 3, year: 2018 },
-        maxPage: { month: 3, year: 2018 },
-        selectedValue: [],
+        minDate: null,
+        maxDate: null,
+        selected: [],
       },
     };
   },
   created() {
     events.$on(Event.START_NEW_ACTION, day => {
+      const now = moment();
+
       this.visible = true;
-      this.day = day;
+      this.datePicker.selected = [day.date.toDate()];
+      this.datePicker.minDate = now
+        .clone()
+        .startOf('month')
+        .toDate();
+      this.datePicker.maxDate = now
+        .clone()
+        .endOf('month')
+        .toDate();
       this.$nextTick(() => this.$refs.name && this.$refs.name.focus());
     });
   },
@@ -107,15 +116,12 @@ export default {
     save() {
       if (this.validForm()) {
         this.visible = false;
-        actionService.addPlannedAction(this.day, this.form);
+        actionService.addPlannedActions(this.datePicker.selected, this.form);
         this.form = defaultFormData();
       }
     },
     validForm() {
       return !!(this.form.name && this.form.type && this.form.amount);
-    },
-    dateChanged() {
-      console.log(this.datePicker.selectedValue);
     },
   },
   components: {

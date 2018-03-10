@@ -1,6 +1,7 @@
 import currency from 'currency-formatter';
 import moment from 'moment';
 import { events, Event } from './../events';
+import * as calService from './../calendar/calendar.service';
 
 export const categories = [
   { value: 'bills', label: 'Bills' },
@@ -28,21 +29,16 @@ export function init() {
   });
 }
 
-export function addPlannedAction(day, action) {
-  const isDebit = action.type === 'debit';
-  const savedAction = {
-    name: action.name,
-    category: action.category,
-    debit: isDebit,
-    amount: (isDebit ? -action.amount : action.amount) * 100,
-    created: day.date.toISOString(),
-  };
+export function addPlannedActions(days, action) {
+  let offset = 0;
 
-  day.actions.planned.push(savedAction);
-  insertAction(savedAction, day);
+  for (let i = 0; i < days.length; ++i) {
+    offset = calService.findDayIndex(days[i], offset);
+
+    addAction(calService.calendar[offset], action);
+  }
 
   localStorage.setObject('data.actions', plannedActions);
-
   refreshFinalBalance();
 }
 
@@ -62,45 +58,50 @@ export const formatCurrencyMixin = {
   },
 };
 
+function addAction(day, action) {
+  const isDebit = action.type === 'debit';
+  const savedAction = {
+    name: action.name,
+    category: action.category,
+    debit: isDebit,
+    amount: (isDebit ? -action.amount : action.amount) * 100,
+    created: day.date.toISOString(),
+  };
+
+  day.actions.planned.push(savedAction);
+  plannedActions[day.index] = plannedActions[day.index] || [];
+  plannedActions[day.index].push(savedAction);
+}
+
 function initPlannedActions() {
-  let actions = localStorage.getObject('data.actions') || [];
-  const cachedLength = actions.length;
+  let actions = localStorage.getObject('data.actions') || {};
 
   // Remove actions from past days
   actions = filterOldActions(actions);
 
-  if (actions.length !== cachedLength) {
-    localStorage.setObject('data.actions', actions);
-  }
-
+  localStorage.setObject('data.actions', actions);
   plannedActions = actions;
-}
-
-function insertAction(action, day) {
-  for (let i = plannedActions.length - 1; i >= 0; --i) {
-    const current = plannedActions[i];
-
-    if (moment(current.created).isSameOrBefore(day.date, 'day')) {
-      plannedActions.splice(i + 1, 0, action);
-      return;
-    }
-  }
-  plannedActions.splice(0, 0, action);
 }
 
 function calculateFinalBalance() {
   finalBalance = originalBalance;
 
-  for (let i = 0; i < plannedActions.length; ++i) {
-    finalBalance += plannedActions[i].amount;
+  const days = Object.keys(plannedActions);
+
+  for (let i = 0; i < days.length; ++i) {
+    const dayActions = plannedActions[days[i]];
+
+    for (let j = 0; j < dayActions.length; ++j) {
+      finalBalance += dayActions[j].amount;
+    }
   }
 }
 
 function filterOldActions(actions) {
-  if (!actions.length) return actions;
-  const now = moment().startOf('day');
-
-  return actions.filter(action => {
-    return moment(action.created).isSameOrAfter(now, 'day');
-  });
+  return Object.keys(actions)
+    .filter(key => parseInt(key) >= calService.todayIndex)
+    .reduce((obj, key) => {
+      obj[key] = actions[key];
+      return obj;
+    }, {});
 }

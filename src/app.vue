@@ -11,11 +11,13 @@ import NavBar from './navbar.vue';
 
 import * as apiService from './monzo/api.service';
 import * as actionService from './action/action.service';
-
-console.clear();
+import * as calService from './calendar/calendar.service';
 
 export default {
   name: 'app',
+  created() {
+    calService.init();
+  },
   mounted() {
     apiService.init();
     actionService.init();

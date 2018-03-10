@@ -12,20 +12,19 @@ export const WEEKDAYS = [
 
 let startDate;
 let endDate;
-let calendar = [];
 let offsetMonth = 0;
+export let calendar = [];
+export let todayIndex;
 
-export function initCalendar() {
+export function init() {
   const now = moment();
 
   startDate = getStartDate(now);
   endDate = getEndDate(now);
 
   for (let m = startDate.clone(); m.isBefore(endDate); m.add(1, 'days')) {
-    calendar.push(getDayObject(m, now));
+    calendar.push(getDayObject(m, now, calendar.length));
   }
-
-  return calendar;
 }
 
 export function getStartDate(now) {
@@ -44,23 +43,49 @@ export function getEndDate(now) {
   return endOfMonth.subtract(offsetMonth, 'month').add(7 - endOfMonth.isoWeekday(), 'days');
 }
 
-export function setActions(actions, type) {
+export function setPastActions(actions) {
   if (!actions.length) return;
 
   let offset = 0;
 
   for (let i = 0; i < actions.length; ++i) {
     offset = findDayIndex(actions[i].created, offset);
-    calendar[offset].actions[type].push(actions[i]);
+    calendar[offset].actions.past.push(actions[i]);
   }
 }
 
-function getDayObject(day, now) {
+export function setPlannedActions(actions) {
+  const keys = Object.keys(actions);
+
+  for (let i = 0; i < keys.length; ++i) {
+    const date = parseInt(keys[i]);
+    calendar[date].actions.planned = actions[keys[i]];
+  }
+}
+
+export function findDayIndex(date, offset) {
+  const momentDate = moment(date);
+
+  for (let i = offset; i < calendar.length; ++i) {
+    if (calendar[i].date.isSame(momentDate, 'day')) {
+      return i;
+    }
+  }
+  return 0;
+}
+
+function getDayObject(day, now, index) {
   const date = day.clone();
+  const isToday = date.isSame(now, 'day');
+
+  if (isToday) {
+    todayIndex = index;
+  }
 
   return {
     date,
-    isToday: date.isSame(now, 'day'),
+    index,
+    isToday,
     isCurrentMonth: date.isSame(now, 'month'),
     isWeekend: date.isoWeekday() > 5,
     isFuture: date.isSameOrAfter(now, 'day'),
@@ -70,15 +95,4 @@ function getDayObject(day, now) {
       planned: [],
     },
   };
-}
-
-function findDayIndex(date, offset) {
-  const momentDate = moment(date);
-
-  for (let i = offset; i < calendar.length; ++i) {
-    if (calendar[i].date.isSame(momentDate, 'day')) {
-      return i;
-    }
-  }
-  return 0;
 }
