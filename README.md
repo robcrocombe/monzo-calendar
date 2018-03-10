@@ -15,3 +15,8 @@ This web app is written in [Vue.js](https://vuejs.org) with [Parcel](https://par
 * Add your [Monzo Client ID and Secret](https://developers.monzo.com) to the new `.env` file.
 * Run `yarn start`
 * Visit the site in your favourite browser.
+
+## To Do
+- Support changing months.
+- Notify user (outside of dev console) when API requests fail.
+- More features.
