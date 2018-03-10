@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import * as authService from './monzo/auth.service';
-import { events, Event } from './events';
+import * as authService from './../monzo/auth.service';
+import { events, Event } from './../events';
 
 export default {
   name: 'navBar',

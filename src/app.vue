@@ -7,7 +7,7 @@
 
 <script>
 import Calendar from './calendar/calendar.vue';
-import NavBar from './navbar.vue';
+import NavBar from './common/navbar.vue';
 
 import * as apiService from './monzo/api.service';
 import * as actionService from './action/action.service';

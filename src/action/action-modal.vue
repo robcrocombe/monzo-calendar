@@ -63,7 +63,7 @@
 
 <script>
 import moment from 'moment';
-import Modal from './../modal.vue';
+import Modal from './../common/modal.vue';
 import { events, Event } from './../events';
 import * as actionService from './action.service';
 

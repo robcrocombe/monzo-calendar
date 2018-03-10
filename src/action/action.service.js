@@ -75,7 +75,7 @@ function addAction(day, action) {
 
 function initPlannedActions() {
   // Reset if the month has changed
-  const cachedMonth = localStorage.getItem('data.month');
+  const cachedMonth = parseInt(localStorage.getItem('data.month'));
   const currentMonth = moment().month();
 
   if (cachedMonth !== currentMonth) {
