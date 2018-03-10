@@ -4,6 +4,7 @@
     <button
       v-if="day.isFuture"
       @click="newAction"
+      :disabled="addDisabled"
       type="button"
       title="Plan a transaction"
       class="button is-white is-small add-action-btn">
@@ -22,7 +23,7 @@ import { events, Event } from './../events';
 
 export default {
   name: 'day',
-  props: ['day'],
+  props: ['day', 'addDisabled'],
   computed: {
     title() {
       if (this.day.date.date() === 1) {

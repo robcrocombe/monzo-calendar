@@ -1,6 +1,6 @@
-const REDIRECT_URL = 'http://localhost:1234/';
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URL = process.env.REDIRECT_URL;
+let CLIENT_ID = process.env.CLIENT_ID || localStorage.getItem('auth.clientId');
+let CLIENT_SECRET = process.env.CLIENT_SECRET || localStorage.getItem('auth.clientSecret');
 
 export function loginUrl() {
   const stateToken = setStateToken();
@@ -28,6 +28,17 @@ export function getToken(authCode) {
     },
     body: data,
   }).then(resp => resp.json());
+}
+
+export function hasClientVars() {
+  return !!(CLIENT_ID && CLIENT_SECRET);
+}
+
+export function setClientVars(clientId, clientSecret) {
+  CLIENT_ID = clientId;
+  CLIENT_SECRET = clientSecret;
+  localStorage.setItem('auth.clientId', clientId);
+  localStorage.setItem('auth.clientSecret', clientSecret);
 }
 
 function setStateToken() {

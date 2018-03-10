@@ -11,8 +11,9 @@ This web app is written in [Vue.js](https://vuejs.org) with [Parcel](https://par
 
 * Clone this repo.
 * Run [Yarn](https://yarnpkg.com) to install dependencies.
-* Run `yarn create-env`
-* Add your [Monzo Client ID and Secret](https://developers.monzo.com) to the new `.env` file.
+* Add your [Monzo Client ID and Secret](https://developers.monzo.com)
+  * Run `yarn create-env` and add them to the local `.env` file.
+  * Alternatively at runtime, by clicking the `Login` button.
 * Run `yarn start`
 * Visit the site in your favourite browser.
 

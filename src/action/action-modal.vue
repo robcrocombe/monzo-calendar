@@ -1,10 +1,10 @@
 <template>
-  <modal :title="'Plan a new transaction'" :visible="visible" @close="close">
+  <modal title="Plan a new transaction" :visible="visible" @close="close">
     <div @keydown.enter="save">
       <div class="field">
         <label class="label" for="name">Name</label>
         <div class="control">
-          <input class="input" type="text" name="name" ref="name" v-model.trim="form.name">
+          <input class="input" type="text" name="name" ref="name" autocomplete="off" v-model.trim="form.name">
         </div>
       </div>
       <div class="columns">
@@ -55,7 +55,7 @@
     </div>
 
     <div slot="footer">
-      <button class="button is-success" @click="save">Save</button>
+      <button class="button is-success" @click="save" :disabled="invalidForm">Save</button>
       <button class="button" @click="close">Cancel</button>
     </div>
   </modal>
@@ -105,8 +105,15 @@ export default {
         .clone()
         .endOf('month')
         .toDate();
+
+      // Auto-focus Name field
       this.$nextTick(() => this.$refs.name && this.$refs.name.focus());
     });
+  },
+  computed: {
+    invalidForm() {
+      return !(this.form.name && this.form.type && this.form.amount);
+    },
   },
   methods: {
     close() {
@@ -114,14 +121,9 @@ export default {
       this.form = defaultFormData();
     },
     save() {
-      if (this.validForm()) {
-        this.visible = false;
-        actionService.addPlannedActions(this.datePicker.selected, this.form);
-        this.form = defaultFormData();
-      }
-    },
-    validForm() {
-      return !!(this.form.name && this.form.type && this.form.amount);
+      this.visible = false;
+      actionService.addPlannedActions(this.datePicker.selected, this.form);
+      this.form = defaultFormData();
     },
   },
   components: {

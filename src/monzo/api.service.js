@@ -19,7 +19,7 @@ export function init() {
     const code = url.searchParams.get('code');
     const state = url.searchParams.get('state');
 
-    localStorage.clear();
+    clearStorageAfterLogin();
 
     if (code && state && stateToken) {
       window.history.replaceState({}, document.title, '/');
@@ -117,4 +117,12 @@ function getQueryString(params) {
     searchParams.set(prop, params[prop]);
   }
   return searchParams.toString();
+}
+
+function clearStorageAfterLogin() {
+  localStorage.removeItem('session.token');
+  localStorage.removeItem('session.accountId');
+  localStorage.removeItem('session.stateToken');
+  localStorage.removeItem('auth.clientId');
+  localStorage.removeItem('auth.clientSecret');
 }

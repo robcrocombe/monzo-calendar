@@ -5,6 +5,7 @@
   "main": "index.html",
   "scripts": {
     "start": "parcel ./index.html",
+    "build": "parcel build ./index.html --public-url ./",
     "create-env": "cp .env.sample .env",
     "lint": "npm run lint:prettier && npm run lint:js && npm run lint:scss",
     "lint:prettier": "npm run prettier -- -l 'src/**/*.{js,vue}' || exit 0",

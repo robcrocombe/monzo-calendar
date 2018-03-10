@@ -16,17 +16,37 @@
     </div>
     <div class="navbar-end">
       <div class="navbar-item" v-if="showLoginButton">
-        <a class="button is-primary" :href="monzoLoginUrl">Login with Monzo</a>
+        <a
+          v-if="hasClientVars"
+          class="button is-primary"
+          :href="monzoLoginUrl">Login with Monzo</a>
+        <button
+          v-else
+          type="button"
+          class="button is-primary"
+          @click="openAuthModal">Login with Monzo</button>
       </div>
       <div class="navbar-item" v-else>
-        <button type="button" class="button" @click="logout">Log out</button>
+        <button type="button" class="button" @click="openLogoutModal">Log out</button>
       </div>
     </div>
+    <auth-modal
+      :visible="showAuthModal"
+      @close="closeAuthModal"
+      @submit="saveClientVars">
+    </auth-modal>
+    <logout-modal
+      :visible="showLogoutModal"
+      @close="closeLogoutModal"
+      @submit="logout">
+    </logout-modal>
   </nav>
 </template>
 
 <script>
 import * as authService from './../monzo/auth.service';
+import AuthModal from './auth-modal.vue';
+import LogoutModal from './logout-modal.vue';
 import { events, Event } from './../events';
 
 export default {
@@ -34,6 +54,8 @@ export default {
   data() {
     return {
       showLoginButton: false,
+      showAuthModal: false,
+      showLogoutModal: false,
       account: {
         balance: 0,
       },
@@ -55,6 +77,9 @@ export default {
       this.diffAmount = this.newBalance - this.account.balance;
       return this.formatCurrency(this.diffAmount, this.account.currency, true, { symbol: '' });
     },
+    hasClientVars() {
+      return authService.hasClientVars();
+    },
   },
   created() {
     events.$on(Event.LOGGED_OUT, () => {
@@ -72,10 +97,29 @@ export default {
   },
   methods: {
     logout() {
-      localStorage.removeItem('session.token');
-      localStorage.removeItem('session.accountId');
+      localStorage.clear();
       location.reload();
     },
+    saveClientVars(form) {
+      authService.setClientVars(form.clientId, form.clientSecret);
+      window.location.href = authService.loginUrl();
+    },
+    openAuthModal() {
+      this.showAuthModal = true;
+    },
+    closeAuthModal() {
+      this.showAuthModal = false;
+    },
+    openLogoutModal() {
+      this.showLogoutModal = true;
+    },
+    closeLogoutModal() {
+      this.showLogoutModal = false;
+    },
+  },
+  components: {
+    AuthModal,
+    LogoutModal,
   },
 };
 </script>
