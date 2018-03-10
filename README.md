@@ -18,5 +18,6 @@ This web app is written in [Vue.js](https://vuejs.org) with [Parcel](https://par
 
 ## To Do
 - Support changing months.
+- Edit/delete planned transactions.
 - Notify user (outside of dev console) when API requests fail.
 - More features.
