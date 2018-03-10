@@ -5,6 +5,7 @@ import { events, Event } from './../events';
 const BASE_URL = 'https://api.monzo.com';
 let sessionToken;
 let accountId;
+let errored = false;
 
 export function init() {
   sessionToken = localStorage.getItem('session.token');
@@ -101,6 +102,13 @@ function get(url, params) {
 
 function handleFetchError(e) {
   console.error(`${e.name}: ${e.message}`);
+
+  if (!errored && e.status === 401) {
+    errored = true;
+    localStorage.removeItem('session.token');
+    localStorage.removeItem('session.accountId');
+    events.$emit(Event.LOGGED_OUT);
+  }
 }
 
 function getQueryString(params) {
