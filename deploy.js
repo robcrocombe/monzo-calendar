@@ -4,9 +4,12 @@ ghpages.publish(
   'dist',
   {
     message: `Update ${new Date().toISOString()}`,
-    push: false,
   },
   err => {
-    console.error(err);
+    if (err) {
+      console.error(err);
+    } else {
+      console.log('🚚  Deployed to gh-pages');
+    }
   }
 );
