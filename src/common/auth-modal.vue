@@ -2,7 +2,8 @@
   <modal title="Login" :visible="visible" @close="close">
     <div>
       <div class="content">
-        <p>You will need to create a client (non-confidential) in the <a href="https://developers.monzo.com">Monzo developer tools</a> to use this app.</p>
+        <p>You will need to create an OAuth client (non-confidential) in the <a href="https://developers.monzo.com">Monzo developer tools</a> to use this app.</p>
+        <p>Use <code>{{ redirectUrl }}</code> as the Redirect URL.</p>
       </div>
       <div class="field mt2">
         <label class="label" for="clientId">Client ID</label>
@@ -60,6 +61,9 @@ export default {
   computed: {
     validForm() {
       return !!(this.form.clientId && this.form.clientSecret);
+    },
+    redirectUrl() {
+      return window.location.href;
     },
   },
   methods: {
