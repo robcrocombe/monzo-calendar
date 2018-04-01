@@ -1,7 +1,14 @@
 <template>
-  <div id="app">
-    <nav-bar></nav-bar>
-    <calendar></calendar>
+  <div id="app" class="flex flex-column">
+    <main>
+      <nav-bar></nav-bar>
+      <calendar></calendar>
+    </main>
+    <footer>
+      <div class="has-text-centered">
+        <a id="gh-link" class="button is-white" href="https://github.com/robcrocombe/monzo-calendar" target="_blank">github.com/robcrocombe/<strong>monzo-calendar</strong></a>
+      </div>
+    </footer>
   </div>
 </template>
 
