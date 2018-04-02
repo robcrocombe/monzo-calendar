@@ -7,7 +7,7 @@
     <footer>
       <div class="has-text-centered">
         <a id="gh-link" class="button is-white" href="https://github.com/robcrocombe/monzo-calendar" target="_blank">
-          <span>github.com/robcrocombe/<strong>monzo-calendar</strong></span>
+          <span class="has-text-grey">github.com/robcrocombe/<strong>monzo-calendar</strong></span>
         </a>
       </div>
     </footer>
