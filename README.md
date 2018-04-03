@@ -5,6 +5,8 @@ A calendar for your [Monzo](https://monzo.com) money. You can:
 * View your current balance.
 * Plan transactions you know you're going to make in the future, and see how they will affect your balance.
 
+[Try a live demo here](https://robcrocombe.github.io/monzo-calendar/)
+
 ## Getting Started
 
 This web app is written in [Vue.js](https://vuejs.org) with [Parcel](https://parceljs.org).
