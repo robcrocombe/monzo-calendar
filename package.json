@@ -25,7 +25,7 @@
     "url": "git+https://github.com/robcrocombe/monzo-calendar.git"
   },
   "author": "Rob Crocombe <me@robcrocombe.com> (http://robcrocombe.com)",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/robcrocombe/monzo-calendar/issues"
   },
