@@ -4,7 +4,7 @@
       <nav-bar></nav-bar>
       <calendar></calendar>
     </main>
-    <footer>
+    <footer id="page-footer">
       <div class="has-text-centered">
         <a id="gh-link" class="button is-white" href="https://github.com/robcrocombe/monzo-calendar" target="_blank">
           <span class="has-text-grey">github.com/robcrocombe/<strong>monzo-calendar</strong></span>
