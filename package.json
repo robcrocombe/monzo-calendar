@@ -5,7 +5,7 @@
   "scripts": {
     "start": "parcel ./index.html",
     "build": "rm -rf dist && parcel build ./index.html --public-url ./ --no-cache",
-    "deploy": "yarn build && node ./deploy.js",
+    "deploy": "npm run build && node ./deploy.js",
     "create-env": "cp .env.sample .env",
     "lint": "npm run lint:prettier && npm run lint:js && npm run lint:scss",
     "lint:prettier": "npm run prettier -- -l 'src/**/*.{js,vue}' || exit 0",
