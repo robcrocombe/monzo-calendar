@@ -94,8 +94,8 @@ function get(url, params) {
     }
 
     const err = new Error();
-    err.name = body.code || resp.status;
-    err.message = body.message || resp.statusText;
+    err.name = body.code || res.status;
+    err.message = body.message || res.statusText;
     throw err;
   });
 }

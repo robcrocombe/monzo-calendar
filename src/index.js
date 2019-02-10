@@ -24,6 +24,6 @@ Vue.use(VCalendar, {
 });
 
 new Vue({
-  el: '#app',
+  el: '#root',
   render: h => h(App),
 });
