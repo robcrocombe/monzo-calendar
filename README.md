@@ -1,5 +1,6 @@
-# Monzo Calendar
-A calendar for your [Monzo](https://monzo.com) money. You can:
+# Monzo Calendar (Vue.js)
+
+A calendar for your [Monzo](https://monzo.com) money. Written in Vue.js, but also [available in React](https://github.com/robcrocombe/monzo-calendar-react/). You can:
 
 * View this month's transactions in a calendar view.
 * View your current balance.
